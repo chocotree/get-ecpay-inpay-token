@@ -1,0 +1,26 @@
+{
+  "name": "example-ecpay-inpay-sdk-2.0",
+  "version": "1.0.0",
+  "description": "綠界站內付2.0Web版",
+  "scripts": {
+    "start": "ts-node src/getTokenForCreatePayment.ts",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
+  },
+  "keywords": ["ecpay"],
+  "author": "tree",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^4.0.0",
+    "node-fetch": "^2.6.1",
+    "ts-node": "^9.1.1"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.0.1",
+    "@types/jest": "^26.0.20",
+    "@types/node-fetch": "^2.5.8",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.3",
+    "typescript": "^4.2.3"
+  }
+}
