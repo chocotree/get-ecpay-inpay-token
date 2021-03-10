@@ -1,10 +1,12 @@
 import { Ecpay } from "../src/Ecpay";
 
+/** 原始資料 */
 const product = {
     Name: "Test",
     ID: "A123456789"
 };
 
+/** 加密後結果 */
 const encryptedData = '7woM9RorZKAtXJRVccAb0qhHYm+5lnlhBzyfh5EZdNck7PacNsRHgv/Jvp//ajJidqcQcs0UmAgPQVjXQHeziw==';
 
 const ecpay = new Ecpay({
