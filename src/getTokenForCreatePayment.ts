@@ -1,8 +1,20 @@
-console.clear();
 import fetch from 'node-fetch';
-import { encrypt, decrypt } from './ecpayUtils';
+import { Ecpay } from './Ecpay';
 
-const MerchantID = '3002607';
+const ecpayStagingInfo = {
+    MerchantID: '3002607',
+    HashKey: 'pwFHCqoQZGmho4w6',
+    HashIV: 'EkRm7iFT261dpevs',
+    // 取得廠商驗證碼(Server)
+    tokenApiUrl: 'https://ecpg-stage.ecpay.com.tw/Merchant/GetTokenbyTrade',
+}
+
+const ecpay = new Ecpay({
+    key: ecpayStagingInfo.HashKey,
+    iv: ecpayStagingInfo.HashIV,
+});
+
+const MerchantID = ecpayStagingInfo.MerchantID;
 
 const data = {
     MerchantID,
@@ -19,7 +31,7 @@ const data = {
         OrderResultURL: 'https://jsonplaceholder.typicode.com/posts/1',
     },
     ConsumerInfo: {
-        MerchantMemberID: '221889',
+        MerchantMemberID: '1006', // 消費者會員編號
     }
 }
 
@@ -29,17 +41,13 @@ const postData = {
         Timestamp: Math.floor(Date.now() / 1000),
         Revision: "1.0.0",
     },
-    Data: encrypt(data),
+    Data: ecpay.encrypt(data),
 }
 
-console.log('what is postData:', postData);
-console.log('\n\n\n')
-
-// 取得廠商驗證碼(Server) - 介接路徑
-const url = 'https://ecpg-stage.ecpay.com.tw/Merchant/GetTokenbyTrade';
+console.log('fetching...\n');
 
 function doFetch() {
-    fetch(url, {
+    fetch(ecpayStagingInfo.tokenApiUrl, {
         method: 'post',
         body: JSON.stringify(postData),
         headers: {
@@ -48,8 +56,8 @@ function doFetch() {
     }).then(res => res.json())
         .then(data => {
             const encryptedData = data.Data;
-            const decrypted = decrypt(encryptedData);
-            console.log('decrypted:', decrypted);
+            const decrypted = ecpay.decrypt(encryptedData);
+            console.log('data:', decrypted);
         })
         .catch(err => {
             console.log('err:', err.message);
