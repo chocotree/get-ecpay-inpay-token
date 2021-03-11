@@ -15,6 +15,7 @@ const ecpay = new Ecpay({
 });
 
 const MerchantID = ecpayStagingInfo.MerchantID;
+const MerchantTradeNo = Math.floor(Math.random() * 654321 * Math.random() * 123456);
 
 const data = {
     MerchantID,
@@ -23,7 +24,7 @@ const data = {
     ChoosePaymentList: 1, // 信用卡一次付清
     OrderInfo: { // 訂單資訊
         MerchantTradeDate: '2021/03/10 00:00:00', // 廠商交易時間
-        MerchantTradeNo: '01312319271924', // 特店交易編號 (訂單編號 ?)
+        MerchantTradeNo, // 特店交易編號 (訂單編號 ?)
         TotalAmount: 60,
         ReturnURL: 'https://jsonplaceholder.typicode.com/posts/1',
     },
